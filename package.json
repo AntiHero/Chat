@@ -24,6 +24,7 @@
     "eslint-plugin-prettier": "^4.2.1",
     "husky": "^8.0.3",
     "lint-staged": "^13.2.0",
+    "opencommit": "^1.1.10",
     "prettier": "^2.8.4",
     "rimraf": "^4.4.0",
     "ts-node": "^10.9.1",
