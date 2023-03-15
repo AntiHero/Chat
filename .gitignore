@@ -1,6 +1,9 @@
 # folders
 node_modules
 
+#build_artifacts
+dist
+
 # cache
 .eslintcache
 
