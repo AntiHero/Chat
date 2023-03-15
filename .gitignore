@@ -1,0 +1,8 @@
+# folders
+node_modules
+
+# cache
+.eslintcache
+
+#logs
+yarn-error.log

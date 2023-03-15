@@ -1,0 +1,32 @@
+{
+  "compilerOptions": {
+    "incremental": true,
+    "outDir": "./dist",
+    "baseUrl": ".",
+    "moduleResolution": "node",
+    "module": "CommonJS",
+    "target": "ES2019",
+    "sourceMap": true,
+    "lib": ["esnext"],
+    "esModuleInterop": true,
+    "alwaysStrict": true,
+    "strictNullChecks": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noUnusedLocals": true,
+    "resolveJsonModule": true,
+    "paths": {
+      "@monorepo/*": ["packages/*/src/index.ts"]
+    }
+  },
+  "references": [
+    {
+      "path": "packages/server"
+    },
+    {
+      "path": "packages/client"
+    }
+  ],
+  "exclude": ["node_modules", "dist", "*.d.ts"]
+}

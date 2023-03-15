@@ -1,0 +1,8 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# type check
+tsc --project ./packages/client --project ./packages/server --noEmit 
+
+# lint-staged
+yarn lint-staged
