@@ -1,13 +1,13 @@
 {
   "parser": "@typescript-eslint/parser",
   "plugins": ["@typescript-eslint/eslint-plugin", "prettier"],
-  "parserOptions": {
-    "project": ["./tsconfig.json"]
-  },
   "extends": [
     "plugin:@typescript-eslint/recommended",
     "plugin:prettier/recommended"
   ],
+  "parserOptions": {
+    "project": true
+  },
   "env": {
     "node": true,
     "jest": true
