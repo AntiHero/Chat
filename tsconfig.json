@@ -28,5 +28,6 @@
       "path": "packages/client"
     }
   ],
-  "exclude": ["node_modules", "dist", "*.d.ts"]
+  "exclude": ["node_modules", "dist", "*.d.ts"],
+  "include": ["packages/*/src/**/*.ts"]
 }
