@@ -1,4 +1,10 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  HttpException,
+  HttpStatus,
+  Post,
+} from '@nestjs/common';
 
 import { UsersService } from '@app/users/application/services/users.service';
 import { UserViewModel } from '@app/users/domain/models/user-view.model';
@@ -14,8 +20,15 @@ export class UsersController {
   public async createUser(
     @Body() createUserDto: CreateUserDto,
   ): Promise<UserViewModel> {
-    const newUser = await this.usersService.create(createUserDto);
+    const result = await this.usersService.create(createUserDto);
 
-    return UserMapper.mapToViewModel(newUser);
+    if (result.ok) {
+      return UserMapper.mapToViewModel(result.value);
+    } else {
+      throw new HttpException(
+        'User cannot be created, try again later',
+        HttpStatus.SERVICE_UNAVAILABLE,
+      );
+    }
   }
 }
