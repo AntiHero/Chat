@@ -1,5 +1,7 @@
-export abstract class QueryRepository {
-  abstract getById<R>(id: string): Promise<R>;
+import { Result } from './types';
 
-  abstract getAll<R>(): Promise<R>;
+export abstract class QueryRepository<R> {
+  abstract getById(id: string): Promise<Result<R>>;
+
+  abstract getByQuery(query: Partial<R>): Promise<Result<R>>;
 }

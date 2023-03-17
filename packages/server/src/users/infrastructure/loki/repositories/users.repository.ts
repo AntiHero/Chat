@@ -3,8 +3,8 @@ import Loki, { Collection } from 'lokijs';
 
 import { User } from '@app/users/domain/entities/user.entity';
 import { Repository } from '@app/@common/repository';
-import { Result } from '@app/@common/types';
 import { wrap } from '@app/@common/utils/wrap';
+import { Result } from '@app/@common/types';
 
 @Injectable()
 export class LokiUsersRepository implements Repository<User, User | undefined> {
