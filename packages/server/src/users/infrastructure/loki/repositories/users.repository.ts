@@ -8,12 +8,9 @@ import { Result } from '@app/@common/types';
 
 @Injectable()
 export class LokiUsersRepository implements Repository<User, User | undefined> {
-  private readonly db: Loki;
-
   private readonly users: Collection<User>;
 
-  public constructor() {
-    this.db = new Loki('users.db');
+  public constructor(private readonly db: Loki) {
     this.users = this.db.addCollection<User>('users');
   }
 

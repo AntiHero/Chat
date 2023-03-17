@@ -4,6 +4,7 @@ import {
   NestFastifyApplication,
   FastifyAdapter,
 } from '@nestjs/platform-fastify';
+import { useContainer } from 'class-validator';
 
 import { AppModule } from './app.module';
 
@@ -20,6 +21,8 @@ async function bootstrap() {
       stopAtFirstError: true,
     }),
   );
+
+  useContainer(app.select(AppModule), { fallbackOnErrors: true });
 
   await app.listen(PORT || 8000, '0.0.0.0');
 }
