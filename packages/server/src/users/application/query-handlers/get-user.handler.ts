@@ -5,7 +5,7 @@ import { User } from '@app/users/domain/entities/user.entity';
 import { GetUserQuery } from '../queries/get-user.query';
 
 @QueryHandler(GetUserQuery)
-export class CreateUserHandler implements IQueryHandler<GetUserQuery> {
+export class GetUserHandler implements IQueryHandler<GetUserQuery> {
   constructor(private readonly usersQueryRepository: QueryRepository<User>) {}
 
   async execute(query: GetUserQuery) {
