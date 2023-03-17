@@ -4,9 +4,9 @@ import { UsersService } from '@app/users/application/services/users.service';
 import { UserViewModel } from '@app/users/domain/models/user-view.model';
 import { CreateUserDto } from '@app/users/api/dtos/create-user.dto';
 import { UserMapper } from '@app/users/utils/mappers/user.mapper';
-import { apiPaths } from '@app/config/api.config';
+import { ApiPaths } from '@app/config/api.config';
 
-@Controller(apiPaths.users)
+@Controller(ApiPaths.users)
 export class UsersController {
   public constructor(private readonly usersService: UsersService) {}
 

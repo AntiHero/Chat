@@ -1,6 +1,5 @@
+import type { User } from '@app/users/domain/entities/user.entity';
+
 export class CreateUserCommand {
-  constructor(
-    public readonly usename: string,
-    public readonly passwrod: string,
-  ) {}
+  constructor(public user: User) {}
 }

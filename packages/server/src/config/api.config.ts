@@ -1,3 +1,3 @@
-export const apiPaths = {
+export const ApiPaths = {
   users: 'users',
 };
