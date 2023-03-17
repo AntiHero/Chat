@@ -14,11 +14,11 @@ import { Repository } from '@app/@common/repository';
   providers: [
     UsersService,
     {
-      provide: Repository.name,
+      provide: Repository,
       useClass: LokiUsersRepository,
     },
     {
-      provide: QueryRepository.name,
+      provide: QueryRepository,
       useClass: LokiUsersQueryRepository,
     },
     CreateUserHandler,
