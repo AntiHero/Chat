@@ -22,7 +22,7 @@ export class LokiUsersQueryRepository implements QueryRepository<User | null> {
     } catch (error) {
       console.log(error);
 
-      return wrap(error, false);
+      return wrap(error);
     }
   }
 
@@ -34,7 +34,7 @@ export class LokiUsersQueryRepository implements QueryRepository<User | null> {
     } catch (error) {
       console.log(error);
 
-      return wrap(error, false);
+      return wrap(error);
     }
   }
 }

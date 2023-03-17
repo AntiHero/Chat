@@ -22,7 +22,7 @@ export class LokiUsersRepository implements Repository<User, User | undefined> {
     } catch (error) {
       console.log(error);
 
-      return wrap(error, false);
+      return wrap(error);
     }
   }
 
