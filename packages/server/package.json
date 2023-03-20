@@ -22,6 +22,7 @@
     "uuid": "^9.0.0"
   },
   "devDependencies": {
+    "@nestjs/schematics": "^9.0.4",
     "@types/bcrypt": "^5.0.0",
     "@types/lokijs": "^1.5.7",
     "@types/node": "^18.15.3",
