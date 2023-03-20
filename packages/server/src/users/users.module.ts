@@ -7,9 +7,11 @@ import { UniqueUsernameConstraint } from '@app/@common/validators/unique-usernam
 import { LokiUsersRepository } from './infrastructure/loki/repositories/users.repository';
 import { CreateUserHandler } from './application/command-handlers/create-user.handler';
 import { GetUserHandler } from './application/query-handlers/get-user.handler';
+import { BcryptService } from './application/services/bcrypt.service';
 import { UsersController } from './api/controllers/users.controller';
 import { UsersService } from './application/services/users.service';
 import { QueryRepository } from '@app/@common/query-repository';
+import { HashingService } from '@app/@common/hashing.service';
 import { Repository } from '@app/@common/repository';
 
 @Module({
@@ -32,6 +34,10 @@ import { Repository } from '@app/@common/repository';
       useFactory: () => {
         return new Loki('users.db');
       },
+    },
+    {
+      provide: HashingService,
+      useClass: BcryptService,
     },
   ],
   controllers: [UsersController],
