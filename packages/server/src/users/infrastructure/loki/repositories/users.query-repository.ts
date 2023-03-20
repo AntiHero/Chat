@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import Loki, { Collection } from 'lokijs';
 
-import { QueryRepository } from '@app/@common/query-repository';
+import { QueryRepository } from '@app/@common/abstracts/query-repository';
 import { User } from '@app/users/domain/entities/user.entity';
 import { wrap } from '@app/@common/utils/wrap';
 import { Result } from '@app/@common/types';

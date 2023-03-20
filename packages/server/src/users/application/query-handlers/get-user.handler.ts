@@ -1,7 +1,7 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 
 import { GetUserQuery } from '@app/users/application/queries/get-user.query';
-import { QueryRepository } from '@app/@common/query-repository';
+import { QueryRepository } from '@app/@common/abstracts/query-repository';
 import { User } from '@app/users/domain/entities/user.entity';
 
 @QueryHandler(GetUserQuery)

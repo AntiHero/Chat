@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import Loki, { Collection } from 'lokijs';
 
+import { Repository } from '@app/@common/abstracts/repository';
 import { User } from '@app/users/domain/entities/user.entity';
-import { Repository } from '@app/@common/repository';
 import { wrap } from '@app/@common/utils/wrap';
 import { Result } from '@app/@common/types';
 

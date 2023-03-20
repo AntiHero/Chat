@@ -7,12 +7,12 @@ import { UniqueUsernameConstraint } from '@app/@common/validators/unique-usernam
 import { LokiUsersRepository } from './infrastructure/loki/repositories/users.repository';
 import { CreateUserHandler } from './application/command-handlers/create-user.handler';
 import { GetUserHandler } from './application/query-handlers/get-user.handler';
+import { QueryRepository } from '@app/@common/abstracts/query-repository';
+import { HashingService } from '@app/@common/abstracts/hashing.service';
 import { BcryptService } from './application/services/bcrypt.service';
 import { UsersController } from './api/controllers/users.controller';
 import { UsersService } from './application/services/users.service';
-import { QueryRepository } from '@app/@common/query-repository';
-import { HashingService } from '@app/@common/hashing.service';
-import { Repository } from '@app/@common/repository';
+import { Repository } from '@app/@common/abstracts/repository';
 
 @Module({
   imports: [CqrsModule],
