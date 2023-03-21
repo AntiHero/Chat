@@ -1,4 +1,6 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, UnauthorizedException, Inject } from '@nestjs/common';
+import { ConfigType } from '@nestjs/config';
+import { JwtService } from '@nestjs/jwt';
 
 import { UsersService } from '@app/users/application/services/users.service';
 import { HashingService } from '@app/@common/abstracts/hashing.service';
@@ -7,12 +9,16 @@ import { LoginUserDto } from '@app/auth/api/dtos/login.dto';
 import { SignUpDto } from '@app/auth/api/dtos/sign-up.dto';
 import { unwrap } from '@app/@common/utils/unwrap';
 import { Result } from '@app/@common/utils/Result';
+import { jwtConfig } from '@app/config/jwt.config';
 
 @Injectable()
 export class AuthService {
   public constructor(
     private readonly usersService: UsersService,
     private readonly hashingService: HashingService,
+    private readonly jwtService: JwtService,
+    @Inject(jwtConfig.KEY)
+    private readonly jwtConfiguration: ConfigType<typeof jwtConfig>,
   ) {}
 
   async signUp(signUpDto: SignUpDto) {
@@ -47,6 +53,19 @@ export class AuthService {
       return ErrorResult(new UnauthorizedException('Wrong credentials'));
     }
 
-    return Result(true);
+    const accessToken = await this.jwtService.signAsync(
+      {
+        // good practice having a sub field
+        sub: user.username,
+      },
+      {
+        audience: this.jwtConfiguration.audience,
+        issuer: this.jwtConfiguration.issuer,
+        secret: this.jwtConfiguration.secret,
+        expiresIn: this.jwtConfiguration.accessTokenTtl,
+      },
+    );
+
+    return Result({ accessToken });
   }
 }
