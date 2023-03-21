@@ -3,9 +3,9 @@ import { Injectable } from '@nestjs/common';
 
 import { CreateUserCommand } from '@app/users/application/commands/create-user.command';
 import { GetUserQuery } from '@app/users/application/queries/get-user.query';
+import { CreateUserDto } from '@app/users/application/dtos/create-user.dto';
 import { User, UserEntity } from '@app/users/domain/entities/user.entity';
-import { CreateUserDto } from '@app/users/api/dtos/create-user.dto';
-import type { Result } from '@app/@common/types';
+import { type ResultType } from '@app/@common/types';
 
 @Injectable()
 export class UsersService {
@@ -14,7 +14,7 @@ export class UsersService {
     private readonly queryBus: QueryBus,
   ) {}
 
-  async create(createUserDto: CreateUserDto): Promise<Result<User, Error>> {
+  async create(createUserDto: CreateUserDto): Promise<ResultType<User, Error>> {
     const { username, password } = createUserDto;
 
     const newUser = new UserEntity(username, password);
@@ -28,7 +28,7 @@ export class UsersService {
     );
   }
 
-  async getByQuery(query: Partial<User>): Promise<Result<User, Error>> {
+  async getByQuery(query: Partial<User>): Promise<ResultType<User, Error>> {
     return this.queryBus.execute(new GetUserQuery(query));
   }
 }

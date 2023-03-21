@@ -5,12 +5,15 @@
   "license": "MIT",
   "scripts": {
     "start:dev": "cross-env DEV_MODE=true nest start --watch",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "build": "rimraf build *.tsbuildinfo && tsc"
   },
   "dependencies": {
     "@nestjs/common": "^9.3.9",
+    "@nestjs/config": "^2.3.1",
     "@nestjs/core": "^9.3.9",
     "@nestjs/cqrs": "^9.0.3",
+    "@nestjs/jwt": "^10.0.2",
     "@nestjs/platform-fastify": "^9.3.9",
     "@types/uuid": "^9.0.1",
     "bcrypt": "^5.1.0",

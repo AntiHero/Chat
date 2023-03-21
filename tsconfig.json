@@ -16,8 +16,9 @@
     "noImplicitThis": true,
     "noUnusedLocals": true,
     "resolveJsonModule": true,
+    "skipLibCheck": true,
     "paths": {
-      "@monorepo/*": ["packages/*/src/index.ts"]
+      "@monorepo/*": ["packages/*/"]
     }
   },
   "references": [

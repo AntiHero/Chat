@@ -8,9 +8,6 @@ import { LokiUsersRepository } from './infrastructure/loki/repositories/users.re
 import { CreateUserHandler } from './application/command-handlers/create-user.handler';
 import { GetUserHandler } from './application/query-handlers/get-user.handler';
 import { QueryRepository } from '@app/@common/abstracts/query-repository';
-import { HashingService } from '@app/@common/abstracts/hashing.service';
-import { BcryptService } from './application/services/bcrypt.service';
-import { UsersController } from './api/controllers/users.controller';
 import { UsersService } from './application/services/users.service';
 import { Repository } from '@app/@common/abstracts/repository';
 
@@ -35,11 +32,8 @@ import { Repository } from '@app/@common/abstracts/repository';
         return new Loki('users.db');
       },
     },
-    {
-      provide: HashingService,
-      useClass: BcryptService,
-    },
   ],
-  controllers: [UsersController],
+  controllers: [],
+  exports: [UsersService],
 })
 export class UsersModule {}

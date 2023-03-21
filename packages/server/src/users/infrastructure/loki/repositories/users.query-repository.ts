@@ -3,8 +3,8 @@ import Loki, { Collection } from 'lokijs';
 
 import { QueryRepository } from '@app/@common/abstracts/query-repository';
 import { User } from '@app/users/domain/entities/user.entity';
+import type { ResultType } from '@app/@common/types';
 import { wrap } from '@app/@common/utils/wrap';
-import { Result } from '@app/@common/types';
 
 @Injectable()
 export class LokiUsersQueryRepository implements QueryRepository<User | null> {
@@ -14,7 +14,7 @@ export class LokiUsersQueryRepository implements QueryRepository<User | null> {
     this.users = this.db.addCollection<User>('users');
   }
 
-  async getById(id: string): Promise<Result<User | null>> {
+  async getById(id: string): Promise<ResultType<User | null>> {
     try {
       const user = this.users.findOne({ id });
 
@@ -26,7 +26,7 @@ export class LokiUsersQueryRepository implements QueryRepository<User | null> {
     }
   }
 
-  async getByQuery(query: Partial<User>): Promise<Result<User | null>> {
+  async getByQuery(query: Partial<User>): Promise<ResultType<User | null>> {
     try {
       const user = this.users.findOne(query);
 

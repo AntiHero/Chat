@@ -1,7 +1,7 @@
-import type { Result } from '@app/@common/types';
+import type { ResultType } from '@app/@common/types';
 
 export abstract class Repository<T, R> {
-  abstract save(data: T): Promise<Result<R>>;
+  abstract save(data: T): Promise<ResultType<R>>;
 
   abstract deleteById(id: string): Promise<void | null>;
 }

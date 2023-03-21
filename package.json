@@ -4,8 +4,8 @@
   "private": true,
   "main": "index.js",
   "scripts": {
-    "typecheck": "",
-    "build": "rimraf \"packages/*/{dist,tsconfig.tsbuildinfo}\" --glob && tsc -b",
+    "typecheck": "yarn workspaces run typecheck",
+    "build": "yarn workspaces run build",
     "server:dev": "yarn workspace @monorepo/server run start:dev",
     "lint": "eslint \"packages/*/{src,apps,libs,test}/**/*.ts\" --fix",
     "postinstall": "husky install"

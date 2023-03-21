@@ -1,3 +1,3 @@
-export type Result<T, R = Error> =
+export type ResultType<T, R = Error> =
   | { ok: true; value: T }
   | { ok: false; error: R };

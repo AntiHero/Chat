@@ -3,13 +3,9 @@
   "compilerOptions": {
     "declaration": true,
     "composite": true,
-    "outDir": "./dist",
+    "outDir": "dist",
+    "rootDir": "src",
     "baseUrl": "."
   },
-  "references": [
-    {
-      "path": "../server"
-    }
-  ],
   "include": ["src/**/*"]
 }

@@ -3,8 +3,8 @@ import Loki, { Collection } from 'lokijs';
 
 import { Repository } from '@app/@common/abstracts/repository';
 import { User } from '@app/users/domain/entities/user.entity';
+import type { ResultType } from '@app/@common/types';
 import { wrap } from '@app/@common/utils/wrap';
-import { Result } from '@app/@common/types';
 
 @Injectable()
 export class LokiUsersRepository implements Repository<User, User | undefined> {
@@ -14,7 +14,7 @@ export class LokiUsersRepository implements Repository<User, User | undefined> {
     this.users = this.db.addCollection<User>('users');
   }
 
-  async save(data: User): Promise<Result<User | undefined>> {
+  async save(data: User): Promise<ResultType<User | undefined>> {
     try {
       const savedUser = this.users.insert(data);
 
