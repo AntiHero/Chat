@@ -1,4 +1,5 @@
 import { ValidationPipe } from '@nestjs/common';
+import fastifyCookie from '@fastify/cookie';
 import { NestFactory } from '@nestjs/core';
 import {
   NestFastifyApplication,
@@ -21,6 +22,8 @@ async function bootstrap() {
       stopAtFirstError: true,
     }),
   );
+
+  app.register(fastifyCookie);
 
   useContainer(app.select(AppModule), { fallbackOnErrors: true });
 

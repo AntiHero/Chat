@@ -9,6 +9,7 @@
     "build": "rimraf build *.tsbuildinfo && tsc"
   },
   "dependencies": {
+    "@fastify/cookie": "^8.3.0",
     "@nestjs/common": "^9.3.9",
     "@nestjs/config": "^2.3.1",
     "@nestjs/core": "^9.3.9",
@@ -29,6 +30,7 @@
     "@types/bcrypt": "^5.0.0",
     "@types/lokijs": "^1.5.7",
     "@types/node": "^18.15.3",
+    "fastify": "^4.15.0",
     "source-map-support": "^0.5.21"
   }
 }

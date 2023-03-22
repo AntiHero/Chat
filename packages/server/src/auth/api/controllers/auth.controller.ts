@@ -1,4 +1,12 @@
-import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  HttpCode,
+  HttpStatus,
+  Post,
+  Res,
+} from '@nestjs/common';
+import { FastifyReply } from 'fastify';
 
 import { AuthService } from '@app/auth/application/services/auth.service';
 import { UserMapper } from '@app/users/utils/mappers/user.mapper';
@@ -21,12 +29,21 @@ export class AuthController {
 
   @HttpCode(HttpStatus.OK)
   @Post(ApiPaths.auth.login)
-  async login(@Body() loginUserDto: LoginUserDto) {
+  async login(
+    @Body() loginUserDto: LoginUserDto,
+    @Res({ passthrough: true }) response: FastifyReply,
+  ) {
     const loginResult = await this.authService.login(loginUserDto);
 
     if (!loginResult.ok) throw loginResult.error;
 
-    return loginResult.value;
+    const { accessToken } = loginResult.value;
+
+    response.setCookie('accessToken', accessToken, {
+      secure: true,
+      httpOnly: true,
+      sameSite: true,
+    });
   }
 
   @Post(ApiPaths.auth.logout)
