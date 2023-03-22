@@ -5,6 +5,7 @@ import { JwtService } from '@nestjs/jwt';
 import { type ActiveUserData } from '@app/auth/interfaces/active-user-data.interface';
 import { UsersService } from '@app/users/application/services/users.service';
 import { HashingService } from '@app/@common/abstracts/hashing.service';
+import { RefreshTokenDto } from '@app/auth/api/dtos/refresh-token.dto';
 import { type User } from '@app/users/domain/entities/user.entity';
 import { ErrorResult } from '@app/@common/utils/ErrorResult';
 import { LoginUserDto } from '@app/auth/api/dtos/login.dto';
@@ -36,10 +37,6 @@ export class AuthService {
       username: loginDto.username,
     });
 
-    if (!userResult.ok) {
-      return ErrorResult(new UnauthorizedException('Wrong credentials'));
-    }
-
     const user = unwrap(userResult);
 
     if (!user) {
@@ -55,13 +52,26 @@ export class AuthService {
       return ErrorResult(new UnauthorizedException('Wrong credentials'));
     }
 
-    const accessToken = await this.signToken({ username: user.username });
-
-    return Result({ accessToken });
+    return this.generateTokens(user);
   }
 
-  private async signToken(user: Partial<User>) {
-    const accessToken = await this.jwtService.signAsync(
+  public async generateTokens(user: Partial<User>) {
+    const [accessToken, refreshToken] = await Promise.all([
+      this.signToken(
+        { username: user.username },
+        this.jwtConfiguration.accessTokenTtl,
+      ),
+      this.signToken(
+        { username: user.username },
+        this.jwtConfiguration.refreshTokenTtl,
+      ),
+    ]);
+
+    return Result({ accessToken, refreshToken });
+  }
+
+  private async signToken(user: Partial<User>, expiresIn: number) {
+    const token = await this.jwtService.signAsync(
       {
         // good practice having a sub field
         sub: user.username,
@@ -70,10 +80,37 @@ export class AuthService {
         audience: this.jwtConfiguration.audience,
         issuer: this.jwtConfiguration.issuer,
         secret: this.jwtConfiguration.secret,
-        expiresIn: this.jwtConfiguration.accessTokenTtl,
+        expiresIn,
       },
     );
 
-    return accessToken;
+    return token;
+  }
+
+  public async refreshTokens(refreshTokenDto: RefreshTokenDto) {
+    try {
+      const { sub } = await this.jwtService.verifyAsync<
+        Pick<ActiveUserData, 'sub'>
+      >(refreshTokenDto.refreshToken, {
+        secret: this.jwtConfiguration.secret,
+        audience: this.jwtConfiguration.audience,
+        issuer: this.jwtConfiguration.issuer,
+      });
+
+      const userResult = await this.usersService.getByQuery({ username: sub });
+
+      const user = unwrap(userResult);
+      console.log(user);
+
+      if (!user) {
+        return ErrorResult(new UnauthorizedException('Wrong credentials'));
+      }
+
+      return this.generateTokens(user);
+    } catch (error) {
+      console.log(error);
+
+      return ErrorResult(error);
+    }
   }
 }

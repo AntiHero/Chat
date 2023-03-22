@@ -10,6 +10,7 @@ import { useContainer } from 'class-validator';
 import { AppModule } from './app.module';
 
 const PORT = process.env.PORT;
+const COOKIE_SECRET = process.env.COOKIE_SECRET;
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
@@ -23,7 +24,9 @@ async function bootstrap() {
     }),
   );
 
-  app.register(fastifyCookie);
+  app.register(fastifyCookie, {
+    secret: COOKIE_SECRET,
+  });
 
   useContainer(app.select(AppModule), { fallbackOnErrors: true });
 
