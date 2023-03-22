@@ -2,6 +2,7 @@ import { Injectable, UnauthorizedException, Inject } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 
+import { type ActiveUserData } from '@app/auth/interfaces/active-user-data.interface';
 import { UsersService } from '@app/users/application/services/users.service';
 import { HashingService } from '@app/@common/abstracts/hashing.service';
 import { ErrorResult } from '@app/@common/utils/ErrorResult';
@@ -57,7 +58,7 @@ export class AuthService {
       {
         // good practice having a sub field
         sub: user.username,
-      },
+      } as ActiveUserData,
       {
         audience: this.jwtConfiguration.audience,
         issuer: this.jwtConfiguration.issuer,
