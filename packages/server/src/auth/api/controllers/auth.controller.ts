@@ -10,10 +10,13 @@ import { FastifyReply } from 'fastify';
 
 import { AuthService } from '@app/auth/application/services/auth.service';
 import { UserMapper } from '@app/users/utils/mappers/user.mapper';
+import { Auth } from '@app/@common/decorators/auth.decorator';
 import { LoginUserDto } from '@app/auth/api/dtos/login.dto';
 import { SignUpDto } from '@app/auth/api/dtos/sign-up.dto';
 import { ApiPaths } from '@app/config/api.config';
+import { AuthType } from '@app/@common/enums';
 
+@Auth(AuthType.None)
 @Controller(ApiPaths.auth.base)
 export class AuthController {
   public constructor(private readonly authService: AuthService) {}
