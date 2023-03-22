@@ -16,6 +16,7 @@ import { UserMapper } from '@app/users/utils/mappers/user.mapper';
 import { Auth } from '@app/@common/decorators/auth.decorator';
 import { LoginUserDto } from '@app/auth/api/dtos/login.dto';
 import { SignUpDto } from '@app/auth/api/dtos/sign-up.dto';
+import { setAuthCookies } from '../utils/set-auth-cookies';
 import { unwrap } from '@app/@common/utils/unwrap';
 import { ApiPaths } from '@app/config/api.config';
 import { AuthType } from '@app/@common/enums';
@@ -46,17 +47,7 @@ export class AuthController {
 
     const { accessToken, refreshToken } = loginResult.value;
 
-    response
-      .setCookie('accessToken', accessToken, {
-        secure: true,
-        httpOnly: true,
-        sameSite: true,
-      })
-      .setCookie('refreshToken', refreshToken, {
-        secure: true,
-        httpOnly: true,
-        sameSite: true,
-      });
+    setAuthCookies(response, accessToken, refreshToken);
   }
 
   @Post(ApiPaths.auth.logout)
@@ -77,16 +68,6 @@ export class AuthController {
 
     const { accessToken, refreshToken } = tokens;
 
-    response
-      .setCookie('accessToken', accessToken, {
-        secure: true,
-        httpOnly: true,
-        sameSite: true,
-      })
-      .setCookie('refreshToken', refreshToken, {
-        secure: true,
-        httpOnly: true,
-        sameSite: true,
-      });
+    setAuthCookies(response, accessToken, refreshToken);
   }
 }
