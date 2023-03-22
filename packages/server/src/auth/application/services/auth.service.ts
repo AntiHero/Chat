@@ -5,6 +5,7 @@ import { JwtService } from '@nestjs/jwt';
 import { type ActiveUserData } from '@app/auth/interfaces/active-user-data.interface';
 import { UsersService } from '@app/users/application/services/users.service';
 import { HashingService } from '@app/@common/abstracts/hashing.service';
+import { type User } from '@app/users/domain/entities/user.entity';
 import { ErrorResult } from '@app/@common/utils/ErrorResult';
 import { LoginUserDto } from '@app/auth/api/dtos/login.dto';
 import { SignUpDto } from '@app/auth/api/dtos/sign-up.dto';
@@ -22,7 +23,7 @@ export class AuthService {
     private readonly jwtConfiguration: ConfigType<typeof jwtConfig>,
   ) {}
 
-  async signUp(signUpDto: SignUpDto) {
+  public async signUp(signUpDto: SignUpDto) {
     const { username, password } = signUpDto;
 
     const hashedPassword = await this.hashingService.hash(password);
@@ -30,7 +31,7 @@ export class AuthService {
     return this.usersService.create({ username, password: hashedPassword });
   }
 
-  async login(loginDto: LoginUserDto) {
+  public async login(loginDto: LoginUserDto) {
     const userResult = await this.usersService.getByQuery({
       username: loginDto.username,
     });
@@ -54,6 +55,12 @@ export class AuthService {
       return ErrorResult(new UnauthorizedException('Wrong credentials'));
     }
 
+    const accessToken = await this.signToken({ username: user.username });
+
+    return Result({ accessToken });
+  }
+
+  private async signToken(user: Partial<User>) {
     const accessToken = await this.jwtService.signAsync(
       {
         // good practice having a sub field
@@ -67,6 +74,6 @@ export class AuthService {
       },
     );
 
-    return Result({ accessToken });
+    return accessToken;
   }
 }
