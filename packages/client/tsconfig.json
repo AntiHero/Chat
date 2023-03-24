@@ -7,7 +7,7 @@
     "rootDir": "src",
     "baseUrl": ".",
     "jsx": "preserve",
-    "lib": ["DOM"],
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "allowJs": true,
     "esModuleInterop": true,
     "strict": true,
@@ -15,5 +15,5 @@
     "noEmit": true,
     "isolatedModules": true
   },
-  "include": ["src/**/*", "next-env.d.ts"]
+  "include": ["src/**/*"]
 }
