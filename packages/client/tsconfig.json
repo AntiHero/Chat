@@ -5,7 +5,9 @@
     "composite": true,
     "outDir": "dist",
     "rootDir": "src",
-    "baseUrl": "."
+    "baseUrl": ".",
+    "jsx": "react",
+    "lib": ["DOM"]
   },
   "include": ["src/**/*"]
 }
