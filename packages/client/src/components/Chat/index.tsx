@@ -1,6 +1,10 @@
 import React from 'react';
 
-const Chat = () => <></>;
+const Chat = () => (
+  <>
+
+  </>
+);
 
 export default Chat;
 

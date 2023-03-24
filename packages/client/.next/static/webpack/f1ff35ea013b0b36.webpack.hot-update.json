@@ -1,0 +1,10 @@
+{
+  "c": ["webpack"],
+  "r": ["pages/index"],
+  "m": [
+    "../../node_modules/next/dist/build/webpack/loaders/next-client-pages-loader.js?absolutePagePath=D%3A%5CJS%5CChat%5Cpackages%5Cclient%5Csrc%5Cpages%5Cindex.tsx&page=%2F!",
+    "./src/App.tsx",
+    "./src/components/Chat/index.tsx",
+    "./src/pages/index.tsx"
+  ]
+}

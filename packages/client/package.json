@@ -5,7 +5,8 @@
   "license": "MIT",
   "scripts": {
     "typecheck": "tsc --noEmit",
-    "build": "rimraf dist *.tsbuildinfo && tsc"
+    "build": "rimraf dist *.tsbuildinfo && tsc",
+    "start:dev": "next dev"
   },
   "dependencies": {
     "next": "^13.2.4",
