@@ -6,7 +6,8 @@
   "scripts": {
     "typecheck": "yarn workspaces run typecheck",
     "build": "yarn workspaces run build",
-    "server:dev": "yarn workspace @monorepo/server run start:dev",
+    "start:server": "yarn workspace @monorepo/server run start:dev",
+    "start:client": "yarn workspace @monorepo/client run start:dev",
     "lint": "eslint \"packages/*/{src,apps,libs,test}/**/*.ts\" --fix",
     "postinstall": "husky install"
   },
