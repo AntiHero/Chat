@@ -1,11 +1,11 @@
-import {
-  MessageBody,
-  SubscribeMessage,
-  WebSocketGateway,
-} from '@nestjs/websockets/decorators';
 import { OnGatewayConnection, OnGatewayDisconnect } from '@nestjs/websockets';
 import { WsResponse } from '@nestjs/websockets/interfaces';
 import { WsException } from '@nestjs/websockets/errors';
+import {
+  WebSocketGateway,
+  SubscribeMessage,
+  MessageBody,
+} from '@nestjs/websockets/decorators';
 import { Socket } from 'socket.io';
 
 @WebSocketGateway(8000, {
@@ -19,6 +19,7 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
   private clients: Map<Socket, string> = new Map();
 
   public handleConnection(client: Socket) {
+    console.log('incoming connection');
     this.clients.set(client, '1');
   }
 
