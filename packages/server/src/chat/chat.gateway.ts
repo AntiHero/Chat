@@ -1,35 +1,38 @@
 import { OnGatewayConnection, OnGatewayDisconnect } from '@nestjs/websockets';
-import { WsResponse } from '@nestjs/websockets/interfaces';
 import { WsException } from '@nestjs/websockets/errors';
+import { Socket, Server } from 'socket.io';
 import {
   WebSocketGateway,
   SubscribeMessage,
+  WebSocketServer,
   MessageBody,
 } from '@nestjs/websockets/decorators';
-import { Socket } from 'socket.io';
+import { randomUUID } from 'crypto';
 
 @WebSocketGateway(8000, {
   cors: {
     origin: '*',
-    credentials: true,
   },
   namespace: '/chat',
 })
 export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
-  private clients: Map<Socket, string> = new Map();
+  @WebSocketServer()
+  private server: Server;
+
+  private clients: Map<Socket, Socket> = new Map();
 
   public handleConnection(client: Socket) {
-    console.log('incoming connection');
-    this.clients.set(client, '1');
+    this.clients.set(client, client);
   }
 
   public handleDisconnect(client: Socket) {
-    console.log(`Client ${client.id} disconnected`);
+    client.clientId = randomUUID();
+    this.clients.delete(client);
   }
 
   @SubscribeMessage('message')
-  public handleMessage(@MessageBody() data: string): WsResponse<string> {
-    return { event: 'message', data };
+  public handleMessage(@MessageBody() message: string) {
+    this.server.emit('message', message);
   }
 
   public forceDisconnect(client: Socket, message: string) {
