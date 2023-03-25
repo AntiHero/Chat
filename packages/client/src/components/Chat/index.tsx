@@ -4,33 +4,40 @@ import { io, Socket } from 'socket.io-client';
 const Chat = () => {
   const [status, setStatus] = useState<'ONLINE' | 'OFFLINE'>('OFFLINE');
   const [messages, setMessages] = useState<string[]>([]);
-  const [_, setSocket] = useState<Socket | null>(null);
+  const [currentMessage, setCurrentMessage] = useState<string>('');
+  const [socket, setSocket] = useState<Socket | null>(null);
 
   useEffect(() => {
-    const socket = io('ws://localhost:8000/chat', {
+    const client = io('http://localhost:8000/chat', {
       transports: ['websocket'],
       auth: {
         token: 'my-token',
-      }
+      },
     });
 
-    setSocket(socket);
-
-    socket.on('connect', () => {
+    client.on('connect', () => {
+      setSocket(client);
       setStatus('ONLINE');
 
-      socket.on('message', (msg) => {
+      client.on('message', (msg) => {
         setMessages((prevMsgs) => [...prevMsgs, msg]);
       });
-
-      socket.emit('message', 'Greetings');
     });
 
-    socket.on('disconnect', () => {
-      console.log('disconnect');
+    client.on('disconnect', () => {
+      setStatus('OFFLINE');
     });
-    console.log('mounted');
+
+    () => {
+      client.close();
+    };
   }, []);
+
+  const handleMessage = (e: React.SyntheticEvent<HTMLInputElement>) => {
+    if (e.target instanceof HTMLInputElement) {
+      setCurrentMessage(e.target.value);
+    }
+  };
 
   return (
     <>
@@ -39,7 +46,10 @@ const Chat = () => {
           {message}
         </div>
       ))}
-      <input />
+      <input onChange={handleMessage} value={currentMessage} />
+      <button onClick={() => { socket?.emit('message', currentMessage); setCurrentMessage(''); }}>
+        send
+      </button>
       <span>{status}</span>
     </>
   );
